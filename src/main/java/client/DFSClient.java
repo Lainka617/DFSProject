@@ -7,9 +7,6 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
-import util.ClientHelper;
-import util.Logger;
-
 /**
  * Class of DFS client
  * @author Shiqi Luo
@@ -44,12 +41,9 @@ public class DFSClient {
 		String response = null;
 		String query = "";
 		
-		//query = ClientHelper.getQuery();
-
-		//while(query != null){
 			try{
 				this.socket = new Socket(this.address, this.port);
-				Logger.printClientInfo("connect with server -- " + this.socket.getRemoteSocketAddress());
+				//Logger.printClientInfo("connect with server -- " + this.socket.getRemoteSocketAddress());
 				this.socket.setSoTimeout(10*1000);
 				this.inputFromServer = new DataInputStream(socket.getInputStream());
 				this.output = new DataOutputStream(socket.getOutputStream());
@@ -58,15 +52,12 @@ public class DFSClient {
 				byte[] bs = new byte[2000];
 				inputFromServer.read(bs);
 				response = new String(bs);
-				Logger.printClientInfo("response from server -- " + response);
+				//Logger.printClientInfo("response from server -- " + response);
 
 			} catch (SocketTimeoutException e) {
 				Logger.printClientInfo("Socket time out. Please try again.");
 			} 
-			// query = ClientHelper.getQuery();
-		//}
-
-		// close streams and sockets after received response
+		
 		output.close();
 		inputFromServer.close();
 		socket.close();
@@ -86,7 +77,7 @@ public class DFSClient {
 			client.run();
 		} catch (IOException | IllegalArgumentException e) {
 			e.printStackTrace();
-			Logger.printClientInfo(e.getLocalizedMessage());
+			//Logger.printClientInfo(e.getLocalizedMessage());
 		}
 	}
 
